@@ -39,10 +39,18 @@ namespace EliminateGame
                     {
                         var index = stack.Pop();
                         region.Add(index);
+                        color[index] = true;
                         var style = map[index];
 
-                        GatherNextStep(map, index-1, l, color, style, stack);
-                        GatherNextStep(map, index+1, l, color, style, stack);
+                        if (index%height != 0)
+                        {
+                            GatherNextStep(map, index - 1, l, color, style, stack);
+                        }
+
+                        if (index%height != width - 1)
+                        {
+                            GatherNextStep(map, index + 1, l, color, style, stack);
+                        }
                         GatherNextStep(map, index-width, l, color, style, stack);
                         GatherNextStep(map, index+width, l, color, style, stack);
                     }
@@ -65,7 +73,7 @@ namespace EliminateGame
 
         private static bool IsIndexValid(int index, int l)
         {
-            return index >= 0 || index < l;
+            return index >= 0 && index < l;
         }
     }
 }
