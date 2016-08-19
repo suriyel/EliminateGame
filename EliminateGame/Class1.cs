@@ -33,21 +33,26 @@ namespace EliminateGame
                     var region = new List<int>();
                     Stack<int> stack=new Stack<int>();
                     stack.Push(i*width + j);
-                    color[i*width + j] = true;
 
                     while (stack.Count>0)
                     {
                         var index = stack.Pop();
+
+                        if (color[index])
+                        {
+                            continue;
+                        }
+
                         region.Add(index);
                         color[index] = true;
                         var style = map[index];
 
-                        if (index%height != 0)
+                        if (index% width != 0)
                         {
                             GatherNextStep(map, index - 1, l, color, style, stack);
                         }
 
-                        if (index%height != width - 1)
+                        if (index% width != width - 1)
                         {
                             GatherNextStep(map, index + 1, l, color, style, stack);
                         }

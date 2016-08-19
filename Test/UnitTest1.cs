@@ -75,5 +75,60 @@ namespace Test
             ArraryEqual(result[2],new List<int>() {8,9,10,11});
             ArraryEqual(result[3],new List<int>() {12,13,14,15});
         }
+
+        /// <summary>
+        /// 边缘测试
+        /// </summary>
+        [TestMethod]
+        public void TestMethod2()
+        {
+            var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TestMap", "2.txt");
+            int width = 0;
+            int height = 0;
+            var map = GetMap(filePath, out width, out height);
+
+            var result = RegionAggregationHelper.GatherGrids(map, height, width);
+
+            Assert.AreEqual(result.Count, 2);
+            ArraryEqual(result[0],new List<int>(){0,5,10,15,16,17,18,19,14,9,4,3,2,1});
+            ArraryEqual(result[1],new List<int>(){6,11,12,7,8,13});
+        }
+
+        /// <summary>
+        /// 长宽不一致
+        /// </summary>
+        [TestMethod]
+        public void TestMethod3()
+        {
+            var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TestMap", "3.txt");
+            int width = 0;
+            int height = 0;
+            var map = GetMap(filePath, out width, out height);
+
+            var result = RegionAggregationHelper.GatherGrids(map, height, width);
+
+            Assert.AreEqual(result.Count, 2);
+            ArraryEqual(result[0], new List<int>() {0});
+            ArraryEqual(result[1], new List<int>() {1});
+        }
+
+        /// <summary>
+        /// 田字
+        /// </summary>
+        [TestMethod]
+        public void TestMethod4()
+        {
+            var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TestMap", "4.txt");
+            int width = 0;
+            int height = 0;
+            var map = GetMap(filePath, out width, out height);
+
+            var result = RegionAggregationHelper.GatherGrids(map, height, width);
+
+            Assert.AreEqual(result.Count, 3);
+            ArraryEqual(result[0], new List<int>() {0,5,10,11,12,7,2,3,4,9,14,13,1});
+            ArraryEqual(result[1],new List<int>() {6});
+            ArraryEqual(result[2],new List<int>() {8});
+        }
     }
 }
